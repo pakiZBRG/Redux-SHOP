@@ -171,3 +171,16 @@ footer{
 .total > div {
   flex: 1;
 }
+
+/* CHeckout Form */
+.form-container{
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+}
+
+.form-container li {
+  display: flex;
+  flex-direction: column;
+  padding: .3rem;
+}
