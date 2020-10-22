@@ -100,14 +100,14 @@ footer{
 
 .product-price div{font-size: 1.5rem;}
 
-.product-price .button{
+.button{
   padding: 0.5rem;
   border: .1rem #c0c0c0 solid;
   background: #f0f0f0;
   cursor: pointer;
 }
 
-.product-price .button:hover{
+.button:hover{
   border: .1rem #808080 solid;
 }
 
@@ -122,4 +122,52 @@ footer{
   padding: 1rem;
   margin: 1rem;
   border-bottom: .1rem #c0c0c0 solid;
+}
+
+/* CART */
+.cart{
+  padding: 1rem;
+  margin: 1rem;
+  display: flex;
+}
+
+.cart-header{
+  border-bottom: .1rem #c0c0c0 solid;
+}
+
+.cart-items{
+  padding: 0;
+  width: 100%;
+  list-style-type: none;
+}
+
+.cart-items img{
+  width: 50px;
+}
+
+.cart-items li {
+  display: flex;
+}
+
+.cart-items li div{
+  padding: .5rem;
+}
+
+.cart-items li div:last-child{
+  flex: 1
+}
+
+.right{
+  float: right
+}
+
+.total{
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  align-items: center;
+}
+
+.total > div {
+  flex: 1;
 }
