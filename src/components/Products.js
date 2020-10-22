@@ -1,20 +1,22 @@
 import React from 'react';
 
-export default function Product({products}){
-
+export default function Product({products, addToCart}){
     return(
         <div>
             <ul className='products'>
-                {products.map(({_id, image, title, price }) => 
-                <li key={_id}>
+                {products.map(product => 
+                <li key={product._id}>
                     <div className='product'>
-                        <a href={`/${_id}`}>
-                            <img src={image} alt={title}/>
-                            <p>{title}</p>
+                        <a href={`/${product._id}`}>
+                            <img src={product.image} alt={product.title}/>
+                            <p>{product.title}</p>
                         </a>
                         <div className='product-price'>
-                            <div>$ {price}</div>
-                            <button className='button primary'>
+                            <div>$ {product.price}</div>
+                            <button 
+                                onClick={() => addToCart(product)}
+                                className='button primary'
+                            >
                                 <i className="fa fa-shopping-cart"></i> Cart
                             </button>
                         </div>

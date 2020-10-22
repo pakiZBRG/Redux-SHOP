@@ -2,12 +2,31 @@ import React, {useState} from 'react';
 import data from './data.json';
 import Products from './components/Products';
 import Filter from './components/Filter';
+import Cart from './components/Cart';
 
 
 function App() {
   const [products, setProducts] = useState(data.products);
+  const [cart, setCart] = useState([]);
   const [size, setSize] = useState('');
   const [sort, setSort] = useState('');
+
+  const removeItem = item => setCart(cart.filter(product => product._id !== item._id));
+
+  const addToCart = product => {
+    const cartItems = [...cart];
+    let inCart = false;
+    cartItems.forEach(item => {
+      if(item._id === product._id){
+        item.count++;
+        inCart = true
+      }
+    });
+    if(!inCart){
+      cartItems.push({...product, count: 1})
+    }
+    setCart(cartItems)
+  }
 
   const filterSort = e => {
     console.log(e.target.value);
@@ -49,10 +68,16 @@ function App() {
               filterSize={filterSize}
               filterSort={filterSort}
             />
-            <Products products={products}/>
+            <Products 
+              products={products}
+              addToCart={addToCart}
+            />
           </div>
           <div className='sidebar'>
-            Cart Items
+            <Cart 
+              cartItems={cart}
+              removeItem={removeItem}
+            />
           </div>
         </div>
       </main>
