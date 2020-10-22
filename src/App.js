@@ -7,11 +7,21 @@ import Cart from './components/Cart';
 
 function App() {
   const [products, setProducts] = useState(data.products);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(
+    (localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : []
+  );
   const [size, setSize] = useState('');
   const [sort, setSort] = useState('');
 
-  const removeItem = item => setCart(cart.filter(product => product._id !== item._id));
+    const createOrder = order => {
+      alert('Need to save an order '+ order.name);
+    }
+
+  const removeItem = item => {
+    const removeItem = cart.filter(product => product._id !== item._id);
+    setCart(removeItem)
+    localStorage.setItem('cart', JSON.stringify(removeItem));
+  }
 
   const addToCart = product => {
     const cartItems = [...cart];
@@ -25,7 +35,8 @@ function App() {
     if(!inCart){
       cartItems.push({...product, count: 1})
     }
-    setCart(cartItems)
+    setCart(cartItems);
+    localStorage.setItem('cart', JSON.stringify(cartItems));
   }
 
   const filterSort = e => {
@@ -77,6 +88,7 @@ function App() {
             <Cart 
               cartItems={cart}
               removeItem={removeItem}
+              createOrder={createOrder}
             />
           </div>
         </div>
