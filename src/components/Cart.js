@@ -55,7 +55,6 @@ export default function Cart({cartItems, removeItem, createOrder}){
             </div>
             {cartItems.length !== 0 &&
             <>
-                
                 <div className='cart'>
                     <div className='total' style={{marginRight: '.7rem'}}>
                         Total: $ <strong>{(cartItems.reduce((a, c) => a + (c.price*c.count), 0)).toFixed(2)}</strong>

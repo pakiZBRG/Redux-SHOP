@@ -38,8 +38,8 @@ export default function Product({products, addToCart}){
             {product && 
                 <Modal isOpen={true} onRequestClose={closeModal}>
                     <Zoom>
-                        <button className='button' onClick={closeModal}>x</button>
-                        <div className='produc-details'>
+                        <button className='button close-modal' onClick={closeModal}>x</button>
+                        <div className='product-details'>
                             <img src={product.image} alt={product.title}/>
                             <div>
                                 <h3>{product.title}</h3>

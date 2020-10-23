@@ -184,3 +184,18 @@ footer{
   flex-direction: column;
   padding: .3rem;
 }
+
+/* Product Details */
+.product-details{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.close-modal{
+  float: right;
+}
+
+.product-price{
+  margin-bottom: 1.5rem;
+}
