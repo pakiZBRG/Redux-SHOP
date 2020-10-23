@@ -14,7 +14,7 @@ const Product = mongoose.model('products', new mongoose.Schema({
     image: {type: String},
     price: {type: Number},
     availableSizes: {type: Array}
-}))
+}));
 
 app.get('/api/products', async (req, res) => {
     const products = await Product.find({});
@@ -30,7 +30,7 @@ app.post("/api/products", async (req,res) => {
 app.delete('/api/products/:id', async(req, res) => {
     await Product.findByIdAndDelete(req.params.id);
     res.send('Order Deleted Successfully');
-})
+});
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server running on ${port}`));

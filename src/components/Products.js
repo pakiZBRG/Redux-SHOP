@@ -1,18 +1,28 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Fade from 'react-reveal/Fade';
 import Modal from 'react-modal';
 import Zoom from 'react-reveal/Zoom';
+import {fetchProducts} from '../actions/product_action';
+import {connect} from 'react-redux';
 
 
-export default function Product({products, addToCart}){
+function Product({products, addToCart, fetchProducts}){
     const [product, setProduct] = useState(null);
     
+    useEffect(() => {
+        fetchProducts()
+    }, [])
+
     const openModal = product => setProduct(product);
     const closeModal = () => setProduct(null);
 
     return(
         <div>
             <Fade bottom big cascade>
+                {!products 
+                    ? 
+                <div>Loading</div> 
+                    : 
                 <ul className='products'>
                     {products.map(product => 
                     <li key={product._id}>
@@ -34,6 +44,7 @@ export default function Product({products, addToCart}){
                     </li>
                     )}
                 </ul>
+                }
             </Fade>
             {product && 
                 <Modal isOpen={true} onRequestClose={closeModal}>
@@ -65,3 +76,10 @@ export default function Product({products, addToCart}){
         </div>
     )
 }
+
+const mapStateToProps = state => ({
+    products: state.products.items
+})
+
+
+export default connect(mapStateToProps, {fetchProducts})(Product);

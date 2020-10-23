@@ -3,6 +3,8 @@ import data from './data.json';
 import Products from './components/Products';
 import Filter from './components/Filter';
 import Cart from './components/Cart';
+import store from './store';
+import { Provider } from 'react-redux';
 
 
 function App() {
@@ -65,38 +67,40 @@ function App() {
   }
 
   return (
-    <div className='grid-container'>
-      <header>
-        <a href="/">Redux Shop</a>
-      </header>
-      <main>
-        <div className='content'>
-          <div className='main'>
-            <Filter 
-              count={products.length}
-              size={size}
-              sort={sort}
-              filterSize={filterSize}
-              filterSort={filterSort}
-            />
-            <Products 
-              products={products}
-              addToCart={addToCart}
-            />
+    <Provider store={store}>
+      <div className='grid-container'>
+        <header>
+          <a href="/">Redux Shop</a>
+        </header>
+        <main>
+          <div className='content'>
+            <div className='main'>
+              <Filter 
+                count={products.length}
+                size={size}
+                sort={sort}
+                filterSize={filterSize}
+                filterSort={filterSort}
+              />
+              <Products 
+                products={products}
+                addToCart={addToCart}
+              />
+            </div>
+            <div className='sidebar'>
+              <Cart 
+                cartItems={cart}
+                removeItem={removeItem}
+                createOrder={createOrder}
+              />
+            </div>
           </div>
-          <div className='sidebar'>
-            <Cart 
-              cartItems={cart}
-              removeItem={removeItem}
-              createOrder={createOrder}
-            />
-          </div>
-        </div>
-      </main>
-      <footer>
-        Nikola Pavlovic &copy; 2020;
-      </footer>
-    </div>
+        </main>
+        <footer>
+          Nikola Pavlovic &copy; 2020;
+        </footer>
+      </div>
+    </Provider>
   );
 }
 
