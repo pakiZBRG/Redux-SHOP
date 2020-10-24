@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import Fade from 'react-reveal/Fade';
+import Zoom from 'react-reveal/Zoom';
+import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { removeFromCart } from '../actions/cart_action';
+import { createOrder, clearOrder } from '../actions/order_action';
 
 
-function Cart({cart, removeFromCart, createOrder}){
+function Cart({cart, order, removeFromCart, createOrder, clearOrder}){
     const [checkout, setCheckout] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -12,11 +15,13 @@ function Cart({cart, removeFromCart, createOrder}){
 
     const uploadOrder = e => {
         e.preventDefault();
+        const total = cart.reduce((a, c) => (a + c.price*c.count), 0)
         const order = {
             name,
             email,
             address,
-            cart
+            cart,
+            total
         }
         createOrder(order)
     }
@@ -32,6 +37,30 @@ function Cart({cart, removeFromCart, createOrder}){
                 <div className='cart cart-header'>
                     {cart.length} item(s) in cart
                 </div>
+            }
+            {order && 
+                <Modal isOpen={true} onRequestClose={clearOrder}>
+                    <Zoom>
+                        <button 
+                            className='close-modal'
+                            onClick={clearOrder}
+                        >
+                            x
+                        </button>
+                        <div className='order-details'>
+                            <h3 className='success-message'>You order has been placed</h3>
+                            <h2>OrderID: {order._id}</h2>
+                            <ul>
+                                <li>Name: <span className='items'>{order.name}</span></li>
+                                <li>Email: <span className='items'>{order.email}</span></li>
+                                <li>Address: <span className='items'>{order.address}</span></li>
+                                <li>Date: <span className='items'>{order.createdAt}</span></li>
+                                <li>Cart: {order.cart.map(item => <span className='items' key={item._id}>{item.count} x {item.title}</span>)}</li>
+                                <li>Total: <span className='items'>$ {order.total}</span></li>
+                            </ul>
+                        </div>
+                    </Zoom>
+                </Modal>
             }
             <div className='cart'>
                 <Fade left cascade>
@@ -124,7 +153,15 @@ function Cart({cart, removeFromCart, createOrder}){
 }
 
 const mapStateToProps = state => ({
-    cart: state.cart.cart
+    cart: state.cart.cart,
+    order: state.order.order
 })
 
-export default connect(mapStateToProps, {removeFromCart})(Cart);
+export default connect(
+    mapStateToProps, 
+    {
+        removeFromCart,
+        createOrder,
+        clearOrder
+    }
+)(Cart);
