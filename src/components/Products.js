@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 import Fade from 'react-reveal/Fade';
 import Modal from 'react-modal';
 import Zoom from 'react-reveal/Zoom';
-import {fetchProducts} from '../actions/product_action';
-import {connect} from 'react-redux';
+import { fetchProducts } from '../actions/product_action';
+import { addToCart } from '../actions/cart_action';
+import { connect} from 'react-redux';
 
 
 function Product({products, addToCart, fetchProducts}){
@@ -82,4 +83,7 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect(mapStateToProps, {fetchProducts})(Product);
+export default connect(
+    mapStateToProps,
+    { fetchProducts, addToCart }
+)(Product);

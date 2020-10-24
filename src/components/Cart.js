@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Fade from 'react-reveal/Fade';
+import { connect } from 'react-redux';
+import { removeFromCart } from '../actions/cart_action';
 
 
-export default function Cart({cartItems, removeItem, createOrder}){
+function Cart({cart, removeFromCart, createOrder}){
     const [checkout, setCheckout] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -14,27 +16,27 @@ export default function Cart({cartItems, removeItem, createOrder}){
             name,
             email,
             address,
-            cartItems
+            cart
         }
         createOrder(order)
     }
 
     return(
         <div>
-            {cartItems.length === 0
+            {cart.length === 0
                 ?
                 <div className='cart cart-header'>
                     Cart is empty
                 </div>
                 :
                 <div className='cart cart-header'>
-                    {cartItems.length} item(s) in cart
+                    {cart.length} item(s) in cart
                 </div>
             }
             <div className='cart'>
                 <Fade left cascade>
                     <ul className='cart-items'>
-                        {cartItems.map(item => 
+                        {cart.map(item => 
                             <li key={item._id}>
                                 <div>
                                     <img src={item.image} alt={item.title}/>
@@ -43,7 +45,10 @@ export default function Cart({cartItems, removeItem, createOrder}){
                                     {item.title}
                                     <div className='right'>
                                         {item.count} x $ {item.price} {' '}
-                                        <button className='button' onClick={() => removeItem(item)}>
+                                        <button 
+                                            className='button' 
+                                            onClick={() => removeFromCart(item)}
+                                        >
                                             <i className='fa fa-trash'></i>
                                         </button>
                                     </div>
@@ -53,11 +58,11 @@ export default function Cart({cartItems, removeItem, createOrder}){
                     </ul>
                 </Fade>
             </div>
-            {cartItems.length !== 0 &&
+            {cart.length !== 0 &&
             <>
                 <div className='cart'>
                     <div className='total' style={{marginRight: '.7rem'}}>
-                        Total: $ <strong>{(cartItems.reduce((a, c) => a + (c.price*c.count), 0)).toFixed(2)}</strong>
+                        Total: $ <strong>{(cart.reduce((a, c) => a + (c.price*c.count), 0)).toFixed(2)}</strong>
                     </div>
                     <button
                         onClick={() => setCheckout(true)}
@@ -117,3 +122,9 @@ export default function Cart({cartItems, removeItem, createOrder}){
         </div>
     )
 }
+
+const mapStateToProps = state => ({
+    cart: state.cart.cart
+})
+
+export default connect(mapStateToProps, {removeFromCart})(Cart);
