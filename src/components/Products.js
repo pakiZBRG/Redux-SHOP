@@ -78,7 +78,7 @@ function Product({products, addToCart, fetchProducts}){
 }
 
 const mapStateToProps = state => ({
-    products: state.products.items
+    products: state.products.filteredItems
 })
 
 
