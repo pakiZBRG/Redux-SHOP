@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 //Mongoose
-mongoose.connect('mongodb+srv://pakiZBRG:KQHgB4zUMZVqVSzb@node-rest-shop.5thyy.mongodb.net/node-rest-shop?retryWrites=true&w=majority', {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true}, () => console.log('MongoDB connected...'));
+mongoose.connect(process.env.MONGODB, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true}, () => console.log('MongoDB connected...'));
 
 //Model -> Product, Order
 const Product = mongoose.model('products', new mongoose.Schema({
